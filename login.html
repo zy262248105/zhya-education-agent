@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="知芽教育智能体评审演示入口">
+  <title>评审登录 · 知芽</title>
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+  <main class="login-page">
+    <section class="brand-panel" aria-label="知芽产品介绍">
+      <div class="brand-panel-head">
+        <a class="login-brand" href="login.html" aria-label="知芽评审登录">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 48 48">
+              <path d="M12 33c2-12 11-20 25-22-1 14-9 23-22 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M15 35c4-8 9-13 17-18" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/>
+              <path d="M14 24c-4 1-7 5-7 10 5 0 9-3 11-7" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span><strong>知芽</strong><small>KNOW THE NEXT STEP</small></span>
+        </a>
+        <span class="review-badge">评审演示版</span>
+      </div>
+
+      <div class="brand-message">
+        <span class="eyebrow">教育类个性化学习智能体</span>
+        <h1>把不会，<br>变成下一步。</h1>
+        <p>先诊断卡点，再给刚好够用的提示，最后通过练习与复盘验证是否真的学会。</p>
+      </div>
+
+      <div class="product-preview">
+        <div class="preview-bar">
+          <span></span><span></span><span></span>
+          <small>知芽 · 学习舱</small>
+        </div>
+        <img src="assets/app-hero.png" alt="知芽个性化学习教练界面">
+      </div>
+
+      <div class="brand-proof">
+        <div><strong>诊断</strong><span>定位概念卡点</span></div>
+        <div><strong>支架</strong><span>分层提示引导</span></div>
+        <div><strong>复盘</strong><span>追踪提示依赖</span></div>
+      </div>
+    </section>
+
+    <section class="access-panel" aria-labelledby="loginTitle">
+      <div class="access-shell">
+        <div class="access-heading">
+          <span class="access-kicker">REVIEWER ACCESS</span>
+          <h2 id="loginTitle">进入评审演示</h2>
+          <p>使用以下演示凭据登录，体验诊断、分层辅导和学习计划。</p>
+        </div>
+
+        <div class="credentials" aria-label="演示账号与密码">
+          <div class="credential-row">
+            <span>演示账号</span>
+            <div><code id="demoAccount">reviewer</code><button type="button" data-copy="reviewer" aria-label="复制演示账号">复制</button></div>
+          </div>
+          <div class="credential-row">
+            <span>演示密码</span>
+            <div><code id="demoPassword">Zhiya@2026</code><button type="button" data-copy="Zhiya@2026" aria-label="复制演示密码">复制</button></div>
+          </div>
+        </div>
+
+        <form class="login-form" id="loginForm" novalidate>
+          <label for="account">账号
+            <div class="field">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0"/></svg>
+              <input id="account" name="account" autocomplete="username" placeholder="请输入演示账号">
+            </div>
+          </label>
+          <label for="password">密码
+            <div class="field">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+              <input id="password" name="password" type="password" autocomplete="current-password" placeholder="请输入演示密码">
+              <button class="reveal-button" type="button" id="togglePassword" aria-label="显示密码">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="2.5"/></svg>
+              </button>
+            </div>
+          </label>
+          <p class="form-error" id="formError" role="alert"></p>
+          <button class="login-button" type="submit" id="loginButton">
+            进入知芽
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </form>
+
+        <div class="safety-note">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 7.5 8 9 4.5-1.5 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>
+          <p><strong>仅用于评审体验</strong><br>请勿输入真实学生姓名、学校或敏感个人信息。演示账号不具备生产级身份认证能力。</p>
+        </div>
+
+        <footer class="access-footer">
+          <span>知芽 · 教育类个性化学习智能体</span>
+          <span>API / UI Prototype</span>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="login.js"></script>
+</body>
+</html>

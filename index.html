@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="知芽，一款会用问题、计划和复盘陪学生学会的个性化学习智能体。">
+  <title>知芽 · 个性化学习教练</title>
+  <script src="auth-guard.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" data-view-target="learn" aria-label="知芽首页">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 48 48" role="img">
+            <path d="M12 33c2-12 11-20 25-22-1 14-9 23-22 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M15 35c4-8 9-13 17-18" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/>
+            <path d="M14 24c-4 1-7 5-7 10 5 0 9-3 11-7" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span>
+          <strong>知芽</strong>
+          <small>知起点，见成长</small>
+        </span>
+      </a>
+
+      <nav class="main-nav" aria-label="主导航">
+        <button class="nav-item active" data-view-target="learn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5v-16Z"/><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"/></svg>
+          <span>学习舱</span>
+        </button>
+        <button class="nav-item" data-view-target="plan">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18M8 14h2M14 14h2M8 17h2"/></svg>
+          <span>今日计划</span>
+        </button>
+        <button class="nav-item" data-view-target="review">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3V4Z"/><path d="M8 8h7M8 12h5M8 20a3 3 0 0 1 3-3h8"/></svg>
+          <span>错题复盘</span>
+        </button>
+        <button class="nav-item" data-view-target="report">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+          <span>成长报告</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-spacer"></div>
+
+      <button class="profile-card" id="openProfile">
+        <span class="avatar" id="avatar">林</span>
+        <span class="profile-copy">
+          <strong id="profileName">林同学</strong>
+          <small id="profileSummary">七年级 · 数学</small>
+        </span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
+
+      <div class="privacy-note">
+        <span class="privacy-dot"></span>
+        <span>学习画像仅保存在本机</span>
+      </div>
+
+      <button class="nav-item nav-logout" id="logoutButton">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M14 4h5a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-5"/></svg>
+        <span>退出演示</span>
+      </button>
+
+      <button class="nav-item nav-about" data-view-target="about">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+        <span>智能体说明</span>
+      </button>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <button class="icon-button menu-button" id="menuButton" aria-label="打开导航">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+        <div class="crumb">
+          <span>知芽学习空间</span>
+          <span class="crumb-separator">/</span>
+          <strong id="viewTitle">学习舱</strong>
+        </div>
+        <div class="top-actions">
+          <div class="streak-pill" title="连续学习 4 天">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2s1 4-1 6c-2-1-3-3-2-5-4 3-5 7-3 11a6 6 0 0 0 10 2c2-3 1-7-1-10 0 2-1 4-3 5 1-3 2-6 0-9Z"/></svg>
+            连续 4 天
+          </div>
+          <button class="icon-button" id="openSettings" aria-label="偏好设置">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.6v-.2h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1Z"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <div class="view-stack">
+        <section class="view active" id="learnView" aria-labelledby="learnHeading">
+          <div class="hero-row">
+            <div>
+              <div class="eyebrow"><span class="live-dot"></span>AI 学习教练在线</div>
+              <h1 id="learnHeading">晚上好，林同学。<br><span>今天想把哪一步学明白？</span></h1>
+              <p>我会先理解你的目标，再用问题带你思考。你可以随时说“再提示一点”。</p>
+            </div>
+            <button class="profile-adjust" id="adjustProfileTop">
+              <span class="mini-avatar" id="miniAvatar">林</span>
+              <span><small>当前学习画像</small><strong id="profileContext">七年级 · 数学</strong></span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </div>
+
+          <div class="learning-layout">
+            <section class="chat-card" aria-label="与知芽对话">
+              <div class="chat-context">
+                <div class="coach-avatar" aria-hidden="true">
+                  <svg viewBox="0 0 48 48"><path d="M12 33c2-12 11-20 25-22-1 14-9 23-22 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 35c4-8 9-13 17-18" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/></svg>
+                </div>
+                <div>
+                  <strong>知芽学习教练</strong>
+                  <span><span class="online-dot"></span><span id="chatSubject">七年级数学 · 先提示，再讲解</span></span>
+                </div>
+                <button class="more-button" id="newConversation" aria-label="开始新对话">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                  新话题
+                </button>
+              </div>
+
+              <div class="messages" id="messages" aria-live="polite"></div>
+
+              <div class="suggestion-area" id="suggestionArea">
+                <span>不知道从哪开始？试试：</span>
+                <div class="suggestion-chips">
+                  <button class="suggestion-chip" data-prompt="今天只有25分钟，帮我复习一元一次方程">25 分钟复习方程</button>
+                  <button class="suggestion-chip" data-prompt="帮我制定这周的数学复习计划">安排这周复习</button>
+                  <button class="suggestion-chip" data-prompt="我有点焦虑，感觉怎么学都学不会">调整学习状态</button>
+                </div>
+              </div>
+
+              <form class="composer" id="composer">
+                <textarea id="promptInput" rows="1" maxlength="500" placeholder="说说卡在哪里，或告诉我今天想学什么…" aria-label="输入学习问题"></textarea>
+                <div class="composer-footer">
+                  <div class="composer-tools">
+                    <button type="button" class="tool-button" data-prompt="帮我看看这道题：2(x - 3) = 4x + 6">
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20 20 4M7 4h5v5M17 20h-5v-5"/></svg>
+                      拍照讲题
+                    </button>
+                    <button type="button" class="tool-button" data-prompt="我想做一次5分钟学情诊断">
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11 12 14 20 6M21 12a9 9 0 1 1-5.3-8.2"/></svg>
+                      快速诊断
+                    </button>
+                  </div>
+                  <button type="submit" class="send-button" id="sendButton" aria-label="发送">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4 20-7Z"/><path d="M22 2 11 13"/></svg>
+                  </button>
+                </div>
+              </form>
+              <div class="composer-hint">知芽会引导思考，不代替你完成作业 · 注意保护个人隐私</div>
+            </section>
+
+            <aside class="side-column">
+              <section class="focus-card">
+                <div class="focus-topline">
+                  <span class="section-label">今日专注</span>
+                  <span class="time-badge">25 分钟</span>
+                </div>
+                <div class="focus-title">
+                  <div>
+                    <h2>拆开括号</h2>
+                    <p>一元一次方程 · 第 2 步</p>
+                  </div>
+                  <div class="progress-ring" id="focusRing" style="--progress: 35">
+                    <span>4/12</span>
+                  </div>
+                </div>
+                <div class="focus-steps">
+                  <div class="focus-step done"><span>01</span><p><strong>回顾旧知</strong><small>等式性质</small></p><span class="step-state">已完成</span></div>
+                  <div class="focus-step current"><span>02</span><p><strong>拆开括号</strong><small>分配律</small></p><span class="step-state">进行中</span></div>
+                  <div class="focus-step"><span>03</span><p><strong>自主练习</strong><small>2 道题</small></p><span class="step-state">待开始</span></div>
+                </div>
+                <button class="primary-button" data-view-target="plan">查看完整计划 <span>→</span></button>
+              </section>
+
+              <section class="mastery-card">
+                <div class="section-heading">
+                  <div>
+                    <span class="section-label">掌握地图</span>
+                    <h3>不是分数，是下一步</h3>
+                  </div>
+                  <button class="text-button" data-view-target="report">详情</button>
+                </div>
+                <div class="mastery-list">
+                  <div class="mastery-item">
+                    <div><span>等式性质</span><strong>82%</strong></div>
+                    <div class="bar"><i style="width:82%"></i></div>
+                  </div>
+                  <div class="mastery-item warm">
+                    <div><span>去括号</span><strong>61%</strong></div>
+                    <div class="bar"><i style="width:61%"></i></div>
+                  </div>
+                  <div class="mastery-item needs">
+                    <div><span>移项变号</span><strong>38%</strong></div>
+                    <div class="bar"><i style="width:38%"></i></div>
+                  </div>
+                </div>
+                <div class="insight-line">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 22h4M8.5 14.5A7 7 0 1 1 15.5 14.5c-1 .7-1.5 1.5-1.5 2.5h-4c0-1-.5-1.8-1.5-2.5Z"/></svg>
+                  <p><strong>发现一个小卡点</strong><br>你常忘记“移项要变号”，今天练 2 题就好。</p>
+                </div>
+              </section>
+            </aside>
+          </div>
+        </section>
+
+        <section class="view" id="planView" aria-labelledby="planHeading">
+          <div class="page-heading">
+            <div>
+              <div class="eyebrow"><span class="live-dot"></span>今日计划已根据你的时间调整</div>
+              <h1 id="planHeading">把大目标，拆成今天能完成的小步。</h1>
+              <p>先拿回“开始”的掌控感。完成有困难时，可以直接告诉我。</p>
+            </div>
+            <button class="secondary-button" id="regeneratePlan">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/></svg>
+              调整计划
+            </button>
+          </div>
+
+          <div class="plan-grid">
+            <section class="plan-panel">
+              <div class="plan-date">
+                <div><span>今天</span><strong>10 月 29 日</strong></div>
+                <div class="time-total"><strong id="planMinutes">25</strong><span>分钟</span></div>
+              </div>
+              <div class="plan-list" id="planList"></div>
+              <button class="ghost-add" id="addPlanTask">＋ 自己加一个学习任务</button>
+            </section>
+
+            <aside class="plan-aside">
+              <section class="week-card">
+                <div class="section-heading">
+                  <div><span class="section-label">本周节奏</span><h3>稳，比快更重要</h3></div>
+                </div>
+                <div class="week-strip" id="weekStrip"></div>
+                <div class="week-legend"><span><i class="legend-done"></i>已完成</span><span><i class="legend-today"></i>今天</span><span><i></i>未开始</span></div>
+              </section>
+              <section class="coach-tip">
+                <span class="coach-tip-mark">“</span>
+                <p>今天不必全会。<br>先找出“哪一步开始不确定”，就是进步。</p>
+                <span>知芽建议</span>
+              </section>
+            </aside>
+          </div>
+        </section>
+
+        <section class="view" id="reviewView" aria-labelledby="reviewHeading">
+          <div class="page-heading">
+            <div>
+              <div class="eyebrow"><span class="live-dot"></span>聪明的复盘，不是重抄答案</div>
+              <h1 id="reviewHeading">错题会说话，关键在听懂它。</h1>
+              <p>我把错题按“背后的概念”归在一起，帮你找到真正要补的那一块。</p>
+            </div>
+            <button class="secondary-button" data-prompt="我想做一次5分钟学情诊断">开始 5 分钟诊断</button>
+          </div>
+
+          <div class="review-summary">
+            <div class="review-stat"><span>本周复盘</span><strong>7<small>道</small></strong><p>比上周少 3 道</p></div>
+            <div class="review-stat"><span>真正卡点</span><strong>2<small>个</small></strong><p>集中在一个概念</p></div>
+            <div class="review-stat"><span>再练一次</span><strong>2<small>题</small></strong><p>建议今晚完成</p></div>
+            <div class="review-stat accent"><span>自我修正</span><strong>71<small>%</small></strong><p>提示后能独立完成</p></div>
+          </div>
+
+          <section class="mistake-panel">
+            <div class="mistake-header">
+              <div><span class="section-label">错因归档</span><h2>移项变号</h2></div>
+              <span class="concept-chip">待巩固 · 3 道题</span>
+            </div>
+            <div class="mistake-example">
+              <div class="mistake-question">
+                <span>原题</span>
+                <strong>3x − 2 = x + 6</strong>
+                <p>你的答案：x = 2</p>
+              </div>
+              <div class="mistake-logic">
+                <span>知芽看到的</span>
+                <div class="logic-row">
+                  <i class="logic-wrong">✕</i>
+                  <p><strong>3x − x = 6 − 2</strong><small>把 −2 移到右边时，没有改变符号</small></p>
+                </div>
+                <div class="logic-row">
+                  <i class="logic-right">✓</i>
+                  <p><strong>3x − x = 6 + 2</strong><small>移项像“换边住”，要换一件相反的外套</small></p>
+                </div>
+              </div>
+            </div>
+            <div class="mistake-actions">
+              <button class="primary-button" data-prompt="用移项变号给我出两道由易到难的题">只练这个卡点</button>
+              <button class="secondary-button" data-prompt="再讲讲为什么移项要变号，换个生活化比喻">换个比喻再讲</button>
+            </div>
+          </section>
+        </section>
+
+        <section class="view" id="reportView" aria-labelledby="reportHeading">
+          <div class="page-heading">
+            <div>
+              <div class="eyebrow"><span class="live-dot"></span>更新于今天 18:42</div>
+              <h1 id="reportHeading">看见变化，才能更愿意坚持。</h1>
+              <p>这里记录的是学习过程，不是给孩子贴标签。</p>
+            </div>
+            <div class="report-period"><button class="active">近 7 天</button><button>近 30 天</button></div>
+          </div>
+
+          <div class="report-grid">
+            <section class="trend-panel">
+              <div class="section-heading">
+                <div><span class="section-label">独立完成趋势</span><h3>提示依赖正在降低</h3></div>
+                <span class="positive-chip">↑ 12%</span>
+              </div>
+              <div class="chart-area" aria-label="近七天独立完成率从55%上升到71%">
+                <div class="chart-y"><span>80%</span><span>60%</span><span>40%</span><span>20%</span></div>
+                <div class="chart">
+                  <div class="grid-line g1"></div><div class="grid-line g2"></div><div class="grid-line g3"></div>
+                  <svg viewBox="0 0 650 220" preserveAspectRatio="none" aria-hidden="true">
+                    <defs>
+                      <linearGradient id="lineFill" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#237c69" stop-opacity=".22"/>
+                        <stop offset="100%" stop-color="#237c69" stop-opacity="0"/>
+                      </linearGradient>
+                    </defs>
+                    <path d="M10,174 C70,166 92,148 140,154 S215,125 268,132 S346,102 396,112 S480,84 524,88 S585,69 640,61 L640,220 L10,220Z" fill="url(#lineFill)"/>
+                    <path d="M10,174 C70,166 92,148 140,154 S215,125 268,132 S346,102 396,112 S480,84 524,88 S585,69 640,61" fill="none" stroke="#237c69" stroke-width="4" stroke-linecap="round"/>
+                    <circle cx="640" cy="61" r="7" fill="#fff" stroke="#237c69" stroke-width="4"/>
+                  </svg>
+                  <div class="chart-x"><span>周四</span><span>周五</span><span>周六</span><span>周日</span><span>周一</span><span>周二</span><span>今天</span></div>
+                </div>
+              </div>
+              <div class="chart-callout"><strong>71%</strong><p>今天独立完成<br><span>比昨天高 3%</span></p></div>
+            </section>
+
+            <aside class="radar-panel">
+              <div class="section-heading"><div><span class="section-label">能力分布</span><h3>本阶段学习画像</h3></div></div>
+              <div class="radar-visual">
+                <svg viewBox="0 0 260 240" role="img" aria-label="能力雷达：概念理解82分，计算准确76分，策略选择64分，表达迁移58分">
+                  <g fill="none" stroke="#dbe4df" stroke-width="1">
+                    <path d="M130 25 224 92 188 202 72 202 36 92Z"/>
+                    <path d="M130 53 197 102 171 181 89 181 63 102Z"/>
+                    <path d="M130 82 170 111 154 160 106 160 90 111Z"/>
+                    <path d="M130 25V202M36 92 224 92M72 202 188 202M36 92l156 110M224 92 72 202"/>
+                  </g>
+                  <path d="M130 44 190 108 164 173 100 173 74 102Z" fill="#237c69" fill-opacity=".18" stroke="#237c69" stroke-width="3"/>
+                  <g fill="#237c69"><circle cx="130" cy="44" r="4"/><circle cx="190" cy="108" r="4"/><circle cx="164" cy="173" r="4"/><circle cx="100" cy="173" r="4"/><circle cx="74" cy="102" r="4"/></g>
+                  <g fill="#65746e" font-size="14" text-anchor="middle">
+                    <text x="130" y="15">概念理解</text><text x="235" y="88">计算</text><text x="204" y="225">策略</text><text x="55" y="225">迁移</text><text x="18" y="88">表达</text>
+                  </g>
+                </svg>
+              </div>
+              <p class="radar-insight">概念理解是优势。下一步不刷更多题，重点练“把思路说出来”。</p>
+            </aside>
+          </div>
+
+          <section class="next-move">
+            <div>
+              <span class="section-label">下一步建议</span>
+              <h2>用一道“讲给别人听”的题，检验是否真的学会。</h2>
+              <p>不用求快。你能用自己的话解释“为什么移项要变号”，才算真正掌握了。</p>
+            </div>
+            <button class="primary-button" data-prompt="我想练习把移项变号讲给别人听，请用苏格拉底提问引导我">开始讲题挑战</button>
+          </section>
+        </section>
+
+        <section class="view" id="aboutView" aria-labelledby="aboutHeading">
+          <div class="page-heading about-heading">
+            <div>
+              <div class="eyebrow"><span class="live-dot"></span>教育类智能体原型</div>
+              <h1 id="aboutHeading">知芽不是答案机器，<br>而是学习过程的共同设计者。</h1>
+              <p>面向初高中学生，用“诊断 - 支架 - 练习 - 复盘”的闭环，让每个学生知道自己下一步该做什么。</p>
+            </div>
+            <div class="about-seal"><span>KNOW</span><strong>→</strong><span>GROW</span></div>
+          </div>
+
+          <div class="about-grid">
+            <section class="about-card wide">
+              <span class="card-number">01 / 核心问题</span>
+              <h2>学生缺的往往不是资料，<br>而是被看见的卡点和可执行的一小步。</h2>
+              <div class="problem-points">
+                <div><strong>信息过载</strong><p>搜到很多讲解，却不知道哪个适合自己。</p></div>
+                <div><strong>反馈太晚</strong><p>作业发下来只剩红叉，错因没有被真正解释。</p></div>
+                <div><strong>计划失真</strong><p>笼统写“复习两小时”，没有考虑真实状态和时间。</p></div>
+              </div>
+            </section>
+
+            <section class="about-card loop-card">
+              <span class="card-number">02 / 工作闭环</span>
+              <h2>四步，把“不会”变成“下一步”。</h2>
+              <div class="agent-loop">
+                <div><span>1</span><strong>诊断</strong><small>看懂已有知识与卡点</small></div>
+                <i>→</i>
+                <div><span>2</span><strong>支架</strong><small>给刚好够用的提示</small></div>
+                <i>→</i>
+                <div><span>3</span><strong>练习</strong><small>即时验证是否独立完成</small></div>
+                <i>→</i>
+                <div><span>4</span><strong>复盘</strong><small>更新画像与复习节奏</small></div>
+              </div>
+            </section>
+
+            <section class="about-card">
+              <span class="card-number">03 / 差异化</span>
+              <h2>先问“你为什么这样想”</h2>
+              <p>不直接抛完整答案，而是根据学生的作答与提示依赖，判断是概念、计算还是表达出了问题。</p>
+              <div class="tag-cloud"><span>渐进提示</span><span>错因归类</span><span>间隔复习</span><span>情绪适配</span></div>
+            </section>
+
+            <section class="about-card">
+              <span class="card-number">04 / 可信与边界</span>
+              <h2>让学生更会学，也让家长更安心</h2>
+              <ul class="boundary-list">
+                <li><i>✓</i>个人画像默认保存在本机，支持一键清除</li>
+                <li><i>✓</i>拒绝代写、作弊式要答案，转为思路引导</li>
+                <li><i>✓</i>知识点标注教材来源，生成内容提示核验</li>
+                <li><i>!</i>不替代教师评价，不用单次成绩给学生贴标签</li>
+              </ul>
+            </section>
+
+            <section class="about-card wide data-card">
+              <span class="card-number">05 / 数据与知识底座</span>
+              <h2>用权威、可追溯的内容托住每一次回答。</h2>
+              <div class="data-flow">
+                <div><span>课程标准</span><small>目标与能力边界</small></div><b>+</b>
+                <div><span>教材知识图谱</span><small>概念、例题、前置关系</small></div><b>+</b>
+                <div><span>可控题库</span><small>难度、答案、错因标签</small></div><b>→</b>
+                <div class="final"><span>学习画像</span><small>只存可解释的学习行为</small></div>
+              </div>
+              <p class="data-note">正式版本接入前，需要逐项核验教材版本、数据授权与题目答案；原型使用内置示例数据。</p>
+            </section>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div class="scrim" id="scrim"></div>
+
+  <dialog class="modal profile-modal" id="profileModal">
+    <form method="dialog" id="profileForm">
+      <div class="modal-head">
+        <div><span class="section-label">个性化学习画像</span><h2>让建议更适合你</h2><p>只收集完成学习建议所需的最少信息。</p></div>
+        <button class="icon-button" type="button" id="closeProfileTop" aria-label="关闭">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="form-grid">
+        <label>怎么称呼你<input id="nameInput" maxlength="12" placeholder="林同学"></label>
+        <label>当前年级
+          <select id="gradeInput">
+            <option>七年级</option><option>八年级</option><option>九年级</option><option>高一</option><option>高二</option><option>高三</option>
+          </select>
+        </label>
+        <label>当前学科
+          <select id="subjectInput">
+            <option>数学</option><option>语文</option><option>英语</option><option>物理</option><option>化学</option>
+          </select>
+        </label>
+        <label>最想突破的知识点<input id="weaknessInput" maxlength="20" placeholder="例如：移项变号"></label>
+        <label class="range-label">今天可用时间 <strong id="minutesValue">25 分钟</strong>
+          <input type="range" id="minutesInput" min="10" max="60" step="5" value="25">
+        </label>
+        <label>偏好讲解方式
+          <select id="styleInput">
+            <option value="先提示，再讲解">先提示，再讲解</option>
+            <option value="生活化比喻">生活化比喻</option>
+            <option value="一步步演算">一步步演算</option>
+          </select>
+        </label>
+      </div>
+      <div class="consent-row">
+        <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 7.5 8 9 4.5-1.5 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>画像仅保存在当前浏览器</span>
+        <button class="secondary-button" type="button" id="cancelProfile">取消</button>
+        <button class="primary-button" type="submit" id="saveProfile">保存画像</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="modal quiz-modal" id="quizModal">
+    <div class="quiz-shell">
+      <div class="quiz-head">
+        <div><span class="section-label">5 分钟学情诊断</span><h2 id="quizTitle">先看看你卡在哪一步</h2></div>
+        <button class="icon-button" id="closeQuiz" aria-label="关闭">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="quiz-progress"><div id="quizProgress"></div></div>
+      <div id="quizContent"></div>
+      <div class="quiz-footer">
+        <span>选择题没有压力，我只是想找到最适合你的起点。</span>
+        <button class="primary-button" id="quizNext" disabled>下一题</button>
+      </div>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
